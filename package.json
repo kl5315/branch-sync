@@ -2,10 +2,9 @@
   "name": "branch-sync",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "action.js",
   "scripts": {
-	  "build": "ncc build action.js -o dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "ncc build action.js -o dist"
   },
   "repository": {
     "type": "git",
@@ -17,7 +16,12 @@
     "url": "https://github.com/kl5315/branch-sync/issues"
   },
   "homepage": "https://github.com/kl5315/branch-sync#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^2.1.0"
+  },
   "devDependencies": {
-    "@vercel/ncc": "^0.28.6"
+    "@zeit/ncc": "^0.22.1",
+    "jest": "^25.5.4"
   }
 }
