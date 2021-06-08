@@ -1,9 +1,5 @@
 name: "Sync branches PR"
 description: "Github Action to create PR for syncing multiple branches matching with a given pattern."
-author:"Krishnan Lokanathan
-branding:
-  icon: git-pull-request
-  color: green
 inputs:
   GITHUB_TOKEN:
     description: "User token to be associated with this pull request."
