@@ -1,11 +1,23 @@
-name: Branch Sync
+name: Sync
 on:
-  pull_request:
-    types: [opened]
+  push:
+    branches:
+      - master
 
 jobs:
-  test:
+  sync-branches:
     runs-on: ubuntu-latest
+    name: Syncing branches
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Sync Branches PR
+        uses: monoku/sync-branches-pr@0.0.1
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          SOURCE_BRANCH: "master"
+          TARGET_BRANCH_STARTS_WITH: "test"
