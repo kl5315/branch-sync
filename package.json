@@ -2,6 +2,7 @@
   "name": "branch-sync",
   "version": "1.0.0",
   "description": "",
+  "author":"Krishnan Lokanathan",
   "main": "action.js",
   "scripts": {
     "build": "ncc build action.js -o dist"
