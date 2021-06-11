@@ -1,23 +1,19 @@
-name: Sync
+name: Automatic Rebase
 on:
-  push:
-    branches:
-      - master
-
+  issue_comment:
+    types: [created]
 jobs:
-  sync-branches:
+  rebase:
+    name: Rebase
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
     runs-on: ubuntu-latest
-    name: Syncing branches
     steps:
-      - name: Checkout
+      - name: Checkout the latest code
         uses: actions/checkout@v2
-      - name: Set up Node
-        uses: actions/setup-node@v1
         with:
-          node-version: 12
-      - name: Sync Branches PR
-        uses: monoku/sync-branches-pr@0.0.1
-        with:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          SOURCE_BRANCH: "master"
-          TARGET_BRANCH_STARTS_WITH: "test"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+      - name: Automatic Rebase
+        uses: cirrus-actions/rebase@1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
