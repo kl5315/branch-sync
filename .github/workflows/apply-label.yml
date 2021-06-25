@@ -4,36 +4,16 @@ on:
     types: [created]
 
 jobs:
-  apply-success-label:
+  apply-label:
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, 'CI_UPDATE_Test_And_Coverage_Passed_So_Approved')
     runs-on: ubuntu-latest
     steps:
-      - name: removelabel
-        uses: buildsville/add-remove-label@v1
+      - uses: actions/github-script@v4
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          label: Ready for review
-          type: add
-            
-  apply-falied-label:
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, 'CI_UPDATE_Coverage_Suite_Failed')
-    runs-on: ubuntu-latest
-    steps:
-      - name: removelabel
-        uses: buildsville/add-remove-label@v1
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          label: Build failed
-          type: add
-            
-  remove_label:
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, 'CI_UPDATE_Coverage_Suite_Failed')
-    runs-on: ubuntu-latest
-    name: remove label
-    steps:
-      - name: removelabel
-        uses: buildsville/add-remove-label@v1
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          label: Ready for review
-          type: remove
+          script: |
+            github.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Ready for review']
+            })
