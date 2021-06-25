@@ -4,7 +4,7 @@ on:
     types: [created]
 
 jobs:
-  apply-label:
+  apply-success-label:
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, 'CI_UPDATE_Test_And_Coverage_Passed_So_Approved')
     runs-on: ubuntu-latest
     steps:
@@ -12,6 +12,26 @@ jobs:
         with:
           script: |
             github.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Ready for review']
+            })
+            
+  apply-falied-label:
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, 'CI_UPDATE_Coverage_Suite_Failed')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            github.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Build failed']
+            }),
+             github.issues.removeLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
