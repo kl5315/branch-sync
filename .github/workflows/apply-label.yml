@@ -12,7 +12,7 @@ jobs:
         uses: buildsville/add-remove-label@v1
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          label: 'Ready for review'
+          label: Ready for review
           type: add
             
   apply-falied-label:
@@ -23,7 +23,7 @@ jobs:
         uses: buildsville/add-remove-label@v1
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          label: 'Build failed'
+          label: Build failed
           type: add
             
   remove_label:
@@ -35,5 +35,5 @@ jobs:
         uses: buildsville/add-remove-label@v1
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          label: 'Ready for review'
+          label: Ready for review
           type: remove
