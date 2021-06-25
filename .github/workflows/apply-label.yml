@@ -31,7 +31,7 @@ jobs:
               repo: context.repo.repo,
               labels: ['Build failed']
             }),
-             github.issues.removeLabel({
+             github.issues.deleteLabel({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
