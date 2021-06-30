@@ -17,3 +17,11 @@ jobs:
               repo: context.repo.repo,
               labels: ['Ready for review']
             })
+  remove-label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-ecosystem/action-remove-labels@v1
+        if: ${{ startsWith(github.event.comment.body, 'CI_UPDATE_Coverage_Suite_Failed') }}
+        with:
+          labels: Ready for review
